@@ -18,6 +18,7 @@ export default function Home() {
       <VolunteerForm />
       <CallToAction />
       <Footer />
+<script src="/form-handler.js"></script>
     </main>
   );
 }
