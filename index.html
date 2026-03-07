@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="KIM Church" />
+  <meta name="description" content="Kingdom Insights Ministries - Official Church App" />
+  <title>Kingdom Insights Ministries</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #F5C842;
+      --gold-light: #FFE083;
+      --gold-dark: #C9960A;
+      --navy: #0D1B5E;
+      --navy-light: #1a2d8a;
+      --black: #0a0a0f;
+      --dark: #111118;
+      --dark2: #1a1a24;
+      --white: #ffffff;
+      --gray: #8888aa;
+      --light-gray: #e8e8f0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      overflow: hidden;
+    }
+
+    #app {
+      height: 100vh;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── SPLASH SCREEN ── */
+    #splash {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    #splash.hide {
+      opacity: 0;
+      transform: scale(1.05);
+      pointer-events: none;
+    }
+
+    .splash-logo {
+      width: 180px;
+      animation: splashPulse 2s ease-in-out infinite;
+    }
+
+    .splash-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      margin-top: 1.5rem;
+      text-transform: uppercase;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+
+    @keyframes splashPulse {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(245,200,66,0.3)); }
+      50% { filter: drop-shadow(0 0 50px rgba(245,200,66,0.7)); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: linear-gradient(180deg, rgba(10,10,15,0.98) 0%, rgba(10,10,15,0.95) 100%);
+      backdrop-filter: blur(20px);
+      padding: 1rem 1.5rem 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(245,200,66,0.15);
+      position: relative;
+      z-index: 10;
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .header-logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-title span:first-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    .header-title span:last-child {
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .live-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(220,38,38,0.15);
+      border: 1px solid rgba(220,38,38,0.4);
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #ff4444;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .live-badge:hover { background: rgba(220,38,38,0.25); }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: #ff4444;
+      border-radius: 50%;
+      animation: livePulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .page { display: none; animation: pageIn 0.4s ease; }
+    .page.active { display: block; }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HOME PAGE ── */
+    .hero {
+      position: relative;
+      height: 240px;
+      background: linear-gradient(135deg, var(--navy) 0%, #050d35 50%, var(--black) 100%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 50%, rgba(245,200,66,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 20%, rgba(13,27,94,0.6) 0%, transparent 60%);
+    }
+
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(245,200,66,0.03) 80px,
+        rgba(245,200,66,0.03) 81px
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      padding: 1.25rem 1rem;
+      background: var(--dark);
+    }
+
+    .quick-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .quick-btn:active { transform: scale(0.92); }
+
+    .quick-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(245,200,66,0.12), rgba(245,200,66,0.05));
+      border: 1px solid rgba(245,200,66,0.2);
+    }
+
+    .quick-btn span {
+      font-size: 0.6rem;
+      color: var(--gray);
+      text-align: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Section */
+    .section { padding: 1.25rem 1rem; }
+    .section + .section { padding-top: 0; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .section-link {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* Announcement Card */
+    .announcement-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      padding: 1.2rem;
+      border: 1px solid rgba(245,200,66,0.1);
+      margin-bottom: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .announcement-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--gold);
+      border-radius: 3px 0 0 3px;
+    }
+
+    .announcement-date {
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .announcement-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .announcement-text {
+      font-size: 0.75rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* Sermon Card */
+    .sermon-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .sermon-card:active { transform: scale(0.98); border-color: rgba(245,200,66,0.3); }
+
+    .sermon-thumb {
+      width: 100%;
+      height: 160px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--black) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sermon-thumb-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(245,200,66,0.1) 0%, transparent 70%);
+    }
+
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(245,200,66,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 30px rgba(245,200,66,0.4);
+    }
+
+    .sermon-info { padding: 1rem; }
+
+    .sermon-series {
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .sermon-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .sermon-meta {
+      font-size: 0.65rem;
+      color: var(--gray);
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* ── LIVE PAGE ── */
+    .live-page { padding: 1.25rem 1rem; }
+
+    .live-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .live-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .live-sub {
+      font-size: 0.7rem;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+    }
+
+    .youtube-embed {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--dark2);
+      border: 1px solid rgba(245,200,66,0.1);
+      margin-bottom: 1rem;
+    }
+
+    .youtube-embed iframe {
+      width: 100%;
+      height: 210px;
+      display: block;
+      border: none;
+    }
+
+    .youtube-link-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: opacity 0.2s ease;
+      margin-bottom: 1rem;
+      text-decoration: none;
+    }
+
+    .schedule-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      padding: 1.2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .schedule-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .schedule-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .schedule-item:last-child { border-bottom: none; }
+
+    .schedule-day {
+      width: 80px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .schedule-info { flex: 1; }
+    .schedule-name { font-size: 0.85rem; color: var(--white); font-weight: 500; }
+    .schedule-time { font-size: 0.7rem; color: var(--gray); margin-top: 2px; }
+
+    /* ── GIVE PAGE ── */
+    .give-page { padding: 0; }
+
+    .give-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #050d35 100%);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .give-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(245,200,66,0.1) 0%, transparent 70%);
+    }
+
+    .give-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .give-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+
+    .give-verse {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      font-style: italic;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .give-options {
+      padding: 1.5rem 1rem;
+    }
+
+    .give-btn {
+      display: block;
+      width: 100%;
+      padding: 1.1rem;
+      border-radius: 14px;
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      margin-bottom: 0.75rem;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .give-btn:active { transform: scale(0.98); }
+
+    .give-btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--black);
+      box-shadow: 0 8px 30px rgba(245,200,66,0.3);
+    }
+
+    .give-btn-secondary {
+      background: var(--dark2);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .give-info {
+      background: var(--dark2);
+      margin: 0 1rem 1rem;
+      border-radius: 16px;
+      padding: 1.2rem;
+      border: 1px solid rgba(245,200,66,0.1);
+    }
+
+    .give-info-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .give-info-text {
+      font-size: 0.75rem;
+      color: var(--gray);
+      line-height: 1.7;
+    }
+
+    /* ── EVENTS PAGE ── */
+    .events-page { padding: 1.25rem 1rem; }
+
+    .event-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin-bottom: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: border-color 0.2s ease;
+    }
+
+    .event-card:active { border-color: rgba(245,200,66,0.3); }
+
+    .event-date-box {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border-radius: 12px;
+      padding: 0.6rem 0.8rem;
+      text-align: center;
+      min-width: 52px;
+      flex-shrink: 0;
+    }
+
+    .event-month {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--black);
+      text-transform: uppercase;
+    }
+
+    .event-day {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .event-details { flex: 1; }
+
+    .event-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+    }
+
+    .event-meta {
+      font-size: 0.65rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    .event-tag {
+      display: inline-block;
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.2);
+      color: var(--gold);
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 20px;
+      margin-top: 0.4rem;
+    }
+
+    /* ── ABOUT PAGE ── */
+    .about-page { padding: 0 0 2rem; }
+
+    .about-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--black) 100%);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(245,200,66,0.08) 0%, transparent 70%);
+    }
+
+    .about-logo {
+      width: 100px;
+      margin: 0 auto 1rem;
+      display: block;
+      position: relative;
+    }
+
+    .about-church-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 0.3rem;
+      position: relative;
+    }
+
+    .about-tagline {
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .staff-section { padding: 1.25rem 1rem; }
+
+    .staff-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    .staff-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      padding: 1.2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .staff-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .staff-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .staff-role {
+      font-size: 0.65rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .staff-bio {
+      font-size: 0.72rem;
+      color: var(--gray);
+      line-height: 1.6;
+      margin-top: 0.3rem;
+    }
+
+    .about-info { padding: 0 1rem; }
+
+    .info-card {
+      background: var(--dark2);
+      border-radius: 16px;
+      padding: 1.2rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 0.75rem;
+    }
+
+    .info-label {
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .info-value {
+      font-size: 0.9rem;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    /* ── BOTTOM NAV ── */
+    .bottom-nav {
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(245,200,66,0.1);
+      display: flex;
+      padding: 0.6rem 0;
+      padding-bottom: max(0.6rem, env(safe-area-inset-bottom));
+    }
+
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.4rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+      position: relative;
+    }
+
+    .nav-item:active { opacity: 0.7; }
+
+    .nav-icon {
+      font-size: 1.4rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .nav-label {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray);
+      transition: color 0.2s ease;
+    }
+
+    .nav-item.active .nav-icon { transform: translateY(-2px) scale(1.1); }
+    .nav-item.active .nav-label { color: var(--gold); }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -0.6rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── SERMONS PAGE ── */
+    .sermons-page { padding: 1.25rem 1rem; }
+
+    .filter-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .filter-row::-webkit-scrollbar { display: none; }
+
+    .filter-chip {
+      flex-shrink: 0;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-chip.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--black);
+    }
+
+    /* Divider */
+    .divider {
+      height: 8px;
+      background: var(--black);
+    }
+
+    /* Scrollbars */
+    .main::-webkit-scrollbar { display: none; }
+    .main { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <svg width="180" height="140" viewBox="0 0 300 230" class="splash-logo" xmlns="http://www.w3.org/2000/svg">
+      <!-- K -->
+      <text x="20" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#1a2d8a">K</text>
+      <!-- I -->
+      <text x="145" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#F5C842">I</text>
+      <!-- M -->
+      <text x="180" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#1a2d8a">M</text>
+      <!-- Swoosh -->
+      <path d="M 30 170 Q 150 195 270 170" stroke="#F5C842" stroke-width="4" fill="none" opacity="0.6"/>
+    </svg>
+    <span class="splash-tagline">Kingdom Insights Ministries</span>
+  </div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-logo">
+      <svg width="36" height="28" viewBox="0 0 300 230" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#3a5fd8">K</text>
+        <text x="145" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#F5C842">I</text>
+        <text x="180" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#3a5fd8">M</text>
+      </svg>
+      <div class="header-title">
+        <span>Kingdom Insights</span>
+        <span>Ministries</span>
+      </div>
+    </div>
+    <div class="live-badge" onclick="showPage('live')">
+      <div class="live-dot"></div>
+      Live
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-lines"></div>
+        <div class="hero-content">
+          <div class="hero-eyebrow">Welcome to</div>
+          <div class="hero-title">Kingdom Insights<br><span>Ministries</span></div>
+          <div class="hero-sub">Apostle Joshua Poro</div>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <div class="quick-btn" onclick="showPage('live')">
+          <div class="quick-icon">📺</div>
+          <span>Watch Live</span>
+        </div>
+        <div class="quick-btn" onclick="showPage('give')">
+          <div class="quick-icon">🙏</div>
+          <span>Give</span>
+        </div>
+        <div class="quick-btn" onclick="showPage('events')">
+          <div class="quick-icon">📅</div>
+          <span>Events</span>
+        </div>
+        <div class="quick-btn" onclick="showPage('about')">
+          <div class="quick-icon">✝️</div>
+          <span>About</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Announcements</div>
+        </div>
+        <div class="announcement-card">
+          <div class="announcement-date">This Sunday</div>
+          <div class="announcement-title">Sunday Service — Join Us!</div>
+          <div class="announcement-text">Join us every Sunday for powerful worship and the Word. Service begins at 10:00 AM. All are welcome!</div>
+        </div>
+        <div class="announcement-card">
+          <div class="announcement-date">Ongoing</div>
+          <div class="announcement-title">Online Giving Now Available</div>
+          <div class="announcement-text">You can now give your tithes and offerings online securely through our giving portal.</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Latest Message</div>
+          <div class="section-link" onclick="showPage('sermons')">See All →</div>
+        </div>
+        <div class="sermon-card" onclick="openYouTube()">
+          <div class="sermon-thumb">
+            <div class="sermon-thumb-bg"></div>
+            <div class="play-btn">▶</div>
+          </div>
+          <div class="sermon-info">
+            <div class="sermon-series">Kingdom Insights Ministries</div>
+            <div class="sermon-title">Latest Message from Apostle Joshua Poro</div>
+            <div class="sermon-meta">
+              <span>Watch on YouTube</span>
+              <span>🔴 Subscribe</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERMONS -->
+    <div class="page" id="page-sermons">
+      <div class="sermons-page">
+        <div class="section-header">
+          <div class="section-title">Messages</div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-chip active">All</div>
+          <div class="filter-chip">Teaching</div>
+          <div class="filter-chip">Worship</div>
+          <div class="filter-chip">Prayer</div>
+          <div class="filter-chip">Series</div>
+        </div>
+        <div class="sermon-card" onclick="openYouTube()">
+          <div class="sermon-thumb">
+            <div class="sermon-thumb-bg"></div>
+            <div class="play-btn">▶</div>
+          </div>
+          <div class="sermon-info">
+            <div class="sermon-series">Kingdom Insights Ministries</div>
+            <div class="sermon-title">Watch Our Latest Messages</div>
+            <div class="sermon-meta">
+              <span>YouTube Channel</span>
+              <span>Apostle Joshua Poro</span>
+            </div>
+          </div>
+        </div>
+        <div class="sermon-card" onclick="openYouTube()">
+          <div class="sermon-thumb">
+            <div class="sermon-thumb-bg"></div>
+            <div class="play-btn">▶</div>
+          </div>
+          <div class="sermon-info">
+            <div class="sermon-series">Live Streams & Replays</div>
+            <div class="sermon-title">Sunday Service Recordings</div>
+            <div class="sermon-meta">
+              <span>YouTube Channel</span>
+              <span>Subscribe for alerts</span>
+            </div>
+          </div>
+        </div>
+        <a href="https://www.youtube.com/@KingdomInsightsMinistriesApostleJoshuaPoro" target="_blank" style="display:block; width:100%; padding:1rem; background:linear-gradient(135deg,#ff0000,#cc0000); border-radius:14px; color:white; font-family:'Montserrat',sans-serif; font-size:0.85rem; font-weight:700; text-align:center; text-decoration:none; margin-top:0.5rem;">
+          📺 View All on YouTube
+        </a>
+      </div>
+    </div>
+
+    <!-- LIVE -->
+    <div class="page" id="page-live">
+      <div class="live-page">
+        <div class="live-header">
+          <div class="live-title">Watch Live</div>
+          <div class="live-sub">Kingdom Insights Ministries</div>
+        </div>
+        <div class="youtube-embed">
+          <iframe
+            src="https://www.youtube.com/embed/live_stream?channel=UCyour_channel_id&autoplay=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <a href="https://www.youtube.com/@KingdomInsightsMinistriesApostleJoshuaPoro/live" target="_blank" class="youtube-link-btn">
+          📺 Open Live Stream on YouTube
+        </a>
+        <div class="schedule-card">
+          <div class="schedule-title">Service Schedule</div>
+          <div class="schedule-item">
+            <div class="schedule-day">Sunday</div>
+            <div class="schedule-info">
+              <div class="schedule-name">Sunday Service</div>
+              <div class="schedule-time">10:00 AM — In Person & Online</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-day">Wednesday</div>
+            <div class="schedule-info">
+              <div class="schedule-name">Midweek Bible Study</div>
+              <div class="schedule-time">7:00 PM — Online</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GIVE -->
+    <div class="page" id="page-give">
+      <div class="give-page">
+        <div class="give-hero">
+          <span class="give-icon">🙏</span>
+          <div class="give-title">Give Online</div>
+          <div class="give-verse">"Bring the whole tithe into the storehouse..." — Malachi 3:10</div>
+        </div>
+        <div class="give-options">
+          <a href="https://give.tithe.ly/?formId=4a3a9c26-b54a-4b76-bc6d-f187ac5e25af" target="_blank" class="give-btn give-btn-primary">
+            💛 Give via Tithe.ly
+          </a>
+          <a href="https://give.tithe.ly/?formId=4a3a9c26-b54a-4b76-bc6d-f187ac5e25af" target="_blank" class="give-btn give-btn-secondary">
+            📱 One-Time Gift
+          </a>
+          <a href="https://give.tithe.ly/?formId=4a3a9c26-b54a-4b76-bc6d-f187ac5e25af" target="_blank" class="give-btn give-btn-secondary">
+            🔁 Set Up Recurring Gift
+          </a>
+        </div>
+        <div class="give-info">
+          <div class="give-info-title">Why We Give</div>
+          <div class="give-info-text">
+            Your generous giving enables Kingdom Insights Ministries to spread the Gospel, support our community, and build the Kingdom of God. Every seed you sow makes an eternal impact. Thank you for your faithfulness!
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div class="page" id="page-events">
+      <div class="events-page">
+        <div class="section-header">
+          <div class="section-title">Upcoming Events</div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-box">
+            <div class="event-month">Mar</div>
+            <div class="event-day">9</div>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Sunday Service</div>
+            <div class="event-meta">10:00 AM · In Person & Online<br>Kingdom Insights Ministries</div>
+            <span class="event-tag">Weekly</span>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-box">
+            <div class="event-month">Mar</div>
+            <div class="event-day">12</div>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Midweek Bible Study</div>
+            <div class="event-meta">7:00 PM · Online (YouTube Live)<br>Apostle Joshua Poro</div>
+            <span class="event-tag">Weekly</span>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-box">
+            <div class="event-month">Mar</div>
+            <div class="event-day">16</div>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Sunday Service</div>
+            <div class="event-meta">10:00 AM · In Person & Online<br>Kingdom Insights Ministries</div>
+            <span class="event-tag">Weekly</span>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-date-box">
+            <div class="event-month">Mar</div>
+            <div class="event-day">30</div>
+          </div>
+          <div class="event-details">
+            <div class="event-title">Special Prayer Service</div>
+            <div class="event-meta">6:00 PM · In Person & Online<br>All are welcome</div>
+            <span class="event-tag">Special</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="page" id="page-about">
+      <div class="about-page">
+        <div class="about-hero">
+          <svg width="100" height="78" viewBox="0 0 300 230" class="about-logo" xmlns="http://www.w3.org/2000/svg">
+            <text x="20" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="white">K</text>
+            <text x="145" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="#F5C842">I</text>
+            <text x="180" y="160" font-family="Georgia, serif" font-size="160" font-weight="bold" fill="white">M</text>
+          </svg>
+          <div class="about-church-name">Kingdom Insights Ministries</div>
+          <div class="about-tagline">Apostle Joshua Poro</div>
+        </div>
+
+        <div class="staff-section">
+          <div class="staff-title">Our Leadership</div>
+          <div class="staff-card">
+            <div class="staff-avatar">✝️</div>
+            <div>
+              <div class="staff-name">Apostle Joshua Poro</div>
+              <div class="staff-role">Senior Pastor & Founder</div>
+              <div class="staff-bio">Leading Kingdom Insights Ministries with a heart for God's people and a passion for Kingdom impact.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-info">
+          <div class="info-card">
+            <div class="info-label">Website</div>
+            <div class="info-value">kim.church</div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">YouTube</div>
+            <div class="info-value" onclick="openYouTube()" style="color:var(--gold);cursor:pointer;">Kingdom Insights Ministries</div>
+          </div>
+          <div class="info-card">
+            <div class="info-label">Sunday Service</div>
+            <div class="info-value">10:00 AM — In Person & Online</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="showPage('home')" id="nav-home">
+      <div class="nav-icon">🏠</div>
+      <div class="nav-label">Home</div>
+    </div>
+    <div class="nav-item" onclick="showPage('sermons')" id="nav-sermons">
+      <div class="nav-icon">🎙️</div>
+      <div class="nav-label">Messages</div>
+    </div>
+    <div class="nav-item" onclick="showPage('live')" id="nav-live">
+      <div class="nav-icon">📺</div>
+      <div class="nav-label">Live</div>
+    </div>
+    <div class="nav-item" onclick="showPage('give')" id="nav-give">
+      <div class="nav-icon">🙏</div>
+      <div class="nav-label">Give</div>
+    </div>
+    <div class="nav-item" onclick="showPage('events')" id="nav-events">
+      <div class="nav-icon">📅</div>
+      <div class="nav-label">Events</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Splash screen
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('splash').classList.add('hide');
+    }, 2000);
+  });
+
+  // Page navigation
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + name);
+    const nav = document.getElementById('nav-' + name);
+    if (page) page.classList.add('active');
+    if (nav) nav.classList.add('active');
+    document.querySelector('.main').scrollTo(0, 0);
+  }
+
+  function openYouTube() {
+    window.open('https://www.youtube.com/@KingdomInsightsMinistriesApostleJoshuaPoro', '_blank');
+  }
+
+  // PWA Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+</script>
+</body>
+</html>
