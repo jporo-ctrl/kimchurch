@@ -1,3 +1,5 @@
+import OurTeam from "@/components/OurTeam";
+import MissionVision from "@/components/MissionVision";
 import Generosity from "@/components/Generosity";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -14,10 +16,12 @@ export default function Home() {
       <Header />
       <Hero />
       <Mission />
+      <MissionVision />
       <ServeAreas />
       <Testimonials />
       <VolunteerForm />
       <Generosity />
+      <OurTeam />
       <CallToAction />
       <Footer />
 <script src="/form-handler.js"></script>
