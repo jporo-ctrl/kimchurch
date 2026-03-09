@@ -12,12 +12,13 @@ interface NavLink {
 
 const navLinks: NavLink[] = [
   { label: "Home", href: "#" },
-  { label: "About Us", href: "#mission" },
+  { label: "About Us", href: "#mission-vision" },
   { label: "Serve & Volunteer", href: "#serve" },
   { label: "Our Services", href: "#" },
   { label: "Generosity", href: "#generosity" },
   { label: "Contact", href: "#form" },
   { label: "Appointments", href: "#" },
+  { label: "Our Team", href: "#our-team" }
 ];
 
 export default function Header() {
