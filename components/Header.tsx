@@ -15,7 +15,7 @@ const navLinks: NavLink[] = [
   { label: "About Us", href: "#mission" },
   { label: "Serve & Volunteer", href: "#serve" },
   { label: "Our Services", href: "#" },
-  { label: "Generosity", href: "#" },
+  { label: "Generosity", href: "#generosity" },
   { label: "Contact", href: "#form" },
   { label: "Appointments", href: "#" },
 ];
@@ -77,7 +77,7 @@ export default function Header() {
             {/* CTA Button */}
             <div className="hidden lg:flex items-center gap-4">
               <a
-                href="#"
+                href="https://give.tithe.ly/?formId=4a3a9c26-b54a-4b76-bc6d-f187ac5e25af"
                 className="group relative px-7 py-3 bg-primary-800 text-white text-body-sm font-semibold rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-glow hover:scale-[1.02]"
               >
                 <span className="relative z-10">Online Giving</span>
@@ -146,7 +146,7 @@ export default function Header() {
                 </nav>
                 <div className="mt-auto">
                   <a
-                    href="#"
+                    href="https://give.tithe.ly/?formId=4a3a9c26-b54a-4b76-bc6d-f187ac5e25af"
                     className="block w-full py-4 text-center bg-primary-800 text-white font-semibold rounded-2xl hover:bg-primary-900 transition-colors duration-300"
                   >
                     Online Giving
