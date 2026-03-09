@@ -55,14 +55,13 @@ export default function OurTeam() {
             {/* Image Side */}
             <div className="relative h-80 lg:h-auto min-h-[400px] bg-gradient-to-br from-primary-900 to-neutral-950 flex items-center justify-center overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-primary-800/20 to-gold-400/10" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative">
-                  <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary-800 to-primary-600 flex items-center justify-center border-4 border-gold-400/30 shadow-2xl">
-                    <span className="text-7xl">✝️</span>
-                  </div>
-                  <div className="absolute -inset-4 rounded-full border border-gold-400/20 animate-pulse" />
-                  <div className="absolute -inset-8 rounded-full border border-gold-400/10" />
-                </div>
+              <div className="absolute inset-0">
+                <img
+                  src="/apostle-joshua-poro.png"
+                  alt="Apostle Joshua Poro"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/60 via-transparent to-transparent" />
               </div>
               {/* Gold accent bar */}
               <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-gold-400 to-gold-600" />
