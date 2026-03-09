@@ -29,7 +29,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="min-h-screen">{children}</body>
+     <body className="min-h-screen">
+  {children}
+  <script dangerouslySetInnerHTML={{__html: `
+    document.addEventListener('submit', async function(e) {
+      if(e.target.tagName === 'FORM') {
+        e.preventDefault();
+        var data = new FormData(e.target);
+        fetch('https://formspree.io/f/mwvrpkzo', {method:'POST',body:data,headers:{'Accept':'application/json'}})
+        .then(function(res) {
+          if(res.ok) { alert('Thank you! We will be in touch soon!'); e.target.reset(); }
+          else { alert('Something went wrong. Please email jporo@kim.church'); }
+        });
+      }
+    });
+  `}} />
+</body>
     </html>
   );
 }
