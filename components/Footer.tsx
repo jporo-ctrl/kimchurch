@@ -29,7 +29,7 @@ const quickLinks: FooterLink[] = [
 const connectLinks: FooterLink[] = [
   { label: "Contact Us", href: "#form" },
   { label: "Online Giving", href: "#" },
-  { label: "Generosity", href: "#" },
+  { label: "Generosity", href: "#generosity" },
   { label: "Prayer Requests", href: "#" },
 ];
 
