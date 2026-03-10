@@ -43,7 +43,7 @@ const socialLinks = [
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/apostlejoshuaporo/",
+    href: "https://www.instagram.com/joshuaporo/",
     color: "#E1306C",
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C">
