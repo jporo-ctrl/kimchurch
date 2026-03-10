@@ -14,7 +14,7 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "Joining the volunteer team at KIM is the best decision I ever made. I found my purpose and a family that loves deeply. Cant wait to Launch",
+      "Joining the volunteer team at KIM is the best decision I ever made. I found my purpose and a family that loves deeply. Can't wait to Launch",
     name: "Sarah M.",
     role: "Worship Team Volunteer",
     image:
