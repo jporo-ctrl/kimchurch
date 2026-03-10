@@ -83,11 +83,11 @@ export default function OurTeam() {
                 Apostle Joshua Poro is a voice for this generation — called, anointed, and appointed to reveal Christ with depth, clarity, and power. As the Vision Bearer of Kingdom Insights Ministries, he carries a mandate to unlock purpose and restore identity in Christ.
               </p>
               <p className="text-body-md text-white/70 leading-relaxed mb-8">
-                With over 7 years of impactful online ministry and a global footprint of more than <strong className="text-white">48,000 digital followers</strong>, his messages are marked by revelation knowledge, apostolic fire, and prophetic accuracy — convicting the heart, renewing the mind, and awakening dormant callings.
+                With over 10 years of impactful online ministry and a global footprint of more than <strong className="text-white">48,000 digital followers</strong>, his messages are marked by revelation knowledge, apostolic fire, and prophetic accuracy — convicting the heart, renewing the mind, and awakening dormant callings.
               </p>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { number: "7+", label: "Years of Ministry" },
+                  { number: "10+", label: "Years of Ministry" },
                   { number: "48K+", label: "Global Followers" },
                   { number: "22K+", label: "YouTube Subscribers" },
                 ].map((stat) => (
