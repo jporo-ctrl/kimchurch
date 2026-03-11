@@ -11,7 +11,6 @@ const weeklySchedule = [
     description:
       "Come early and seek the face of God. This dedicated prayer hour is open to all who desire a deeper encounter before the service begins. Intercessors, prayer warriors, and newcomers are all welcome.",
     icon: <Heart className="w-5 h-5" />,
-    color: "from-gold-400/10 to-gold-600/10",
     type: "prayer",
     tag: "Optional — Open to All",
   },
