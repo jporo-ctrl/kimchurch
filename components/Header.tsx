@@ -19,6 +19,7 @@ const navLinks: NavLink[] = [
   { label: "Contact", href: "#form" },
   { label: "Appointments", href: "#form" },
   { label: "Our Team", href: "#our-team" }
+  { label: "Services", href: "#services" }
 ];
 
 export default function Header() {
