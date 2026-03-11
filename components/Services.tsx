@@ -38,8 +38,8 @@ const specialServices = [
     accent: "text-primary-400",
   },
   {
-    date: "December 25, 2026",
-    day: "Thursday",
+    date: "December 24, 2026",
+    day: "Wednesday",
     name: "Christmas Service",
     description:
       "Honor the birth of our Savior with a Christmas celebration service. Come and worship Emmanuel — God with us.",
