@@ -15,8 +15,8 @@ export default function Home() {
   return (
     <main className="relative">
       <Header />
-      <Services />
       <Hero />
+      <Services />
       <Mission />
       <MissionVision />
       <ServeAreas />
