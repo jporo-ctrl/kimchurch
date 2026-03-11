@@ -112,7 +112,7 @@ export default function Services() {
         >
           <div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/5 border border-white/10">
             <MapPin className="w-4 h-4 text-gold-400 shrink-0" />
-            <span className="text-body-sm text-white/70">1418 W Pipeline Rd #145, Hurst, TX 76053</span>
+            <span className="text-body-sm text-white/70">4201 Pool Rd, Grapevine, TX 76051</span>
           </div>
           <div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/5 border border-white/10">
             <Wifi className="w-4 h-4 text-gold-400 shrink-0" />
