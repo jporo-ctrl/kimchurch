@@ -17,7 +17,7 @@ const navLinks: NavLink[] = [
   { label: "Our Services", href: "#" },
   { label: "Generosity", href: "#generosity" },
   { label: "Contact", href: "#form" },
-  { label: "Appointments", href: "#contact" },
+  { label: "Appointments", href: "#form" },
   { label: "Our Team", href: "#our-team" }
 ];
 
