@@ -1,3 +1,4 @@
+import Services from "@/components/Services"
 import OurTeam from "@/components/OurTeam";
 import MissionVision from "@/components/MissionVision";
 import Generosity from "@/components/Generosity";
@@ -14,6 +15,7 @@ export default function Home() {
   return (
     <main className="relative">
       <Header />
+      <Services />
       <Hero />
       <Mission />
       <MissionVision />
