@@ -13,13 +13,11 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { label: "Home", href: "#" },
   { label: "About Us", href: "#mission-vision" },
+  { label: "Services", href: "#services" },
+  { label: "Our Team", href: "#our-team" },
   { label: "Serve & Volunteer", href: "#serve" },
-  { label: "Our Services", href: "#" },
   { label: "Generosity", href: "#generosity" },
   { label: "Contact", href: "#form" },
-  { label: "Appointments", href: "#form" },
-  { label: "Our Team", href: "#our-team" },
-  { label: "Services", href: "#services" },
 ];
 
 export default function Header() {
@@ -67,8 +65,8 @@ export default function Header() {
                   className={cn(
                     "relative px-4 py-2 text-body-sm font-medium rounded-xl transition-all duration-300",
                     isScrolled
-                      ? "text-neutral-600 hover:text-primary-800 hover:bg-primary-50"
-                      : "text-neutral-700 hover:text-primary-800 hover:bg-white/60"
+                      ? "text-neutral-700 hover:text-primary-800 hover:bg-primary-50"
+                      : "text-white hover:text-gold-400 hover:bg-white/10"
                   )}
                 >
                   {link.label}
@@ -99,7 +97,7 @@ export default function Header() {
                 <Menu
                   className={cn(
                     "w-6 h-6 transition-colors",
-                    isScrolled ? "text-neutral-900" : "text-neutral-800"
+                    isScrolled ? "text-neutral-900" : "text-white"
                   )}
                 />
               )}
